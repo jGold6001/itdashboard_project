@@ -4,9 +4,9 @@ from src.utility.utilitymethods import UtilityMethods
 import time
 
 
-
+# mock data
 url = "https://itdashboard.gov/drupal/summary/010"
-#url = "https://itdashboard.gov/"
+# url = "https://itdashboard.gov/"
 agency_name = 'Department of the Interior'
 
 
@@ -20,13 +20,15 @@ def main():
         # print(str(agencies_data.count()) + " items scraped from url " + url)
         # selected_agency = UtilityMethods.get_agency_by_name(agency_name, agencies_data)
 
+        # mock data
         selected_agency = AgencyModel(agency_name, "$1.4B", "https://itdashboard.gov/drupal/summary/010")
+
         print("'"+selected_agency.name + "' item was selected")
         web_process.open_item_link(selected_agency.link)
         print(selected_agency.name + " page has been opened by url: " + selected_agency.link)
         web_process.process_agency_item(selected_agency)
 
-        time.sleep(10)
+        # time.sleep(10)
 
     # except Exception as ex:
     #     print("Unexpected error - " + str(ex))

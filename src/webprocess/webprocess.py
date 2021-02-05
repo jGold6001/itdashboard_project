@@ -4,6 +4,7 @@ from src.webprocess.agencypageobject import AgencyPageObject
 from RPA.Browser.Selenium import Browser
 from src.models.agencymodel import AgencyModel
 
+
 class WebProcess:
     listOfAgenciesData = []
 
