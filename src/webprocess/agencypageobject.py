@@ -1,10 +1,11 @@
 from src.models.agencymodel import AgencyModel
 from src.utility.utilitymethods import UtilityMethods
 from RPA.Browser.Selenium import Browser
+from RPA.Browser.Selenium import Selenium
 
 class AgencyPageObject:
     table_row_locator: str = '//table[@id="investments-table-object"]//tbody//tr'
-
+    table_column: str = "//td"
     def __init__(self, browser: Browser):
         self.browser = browser
 
@@ -14,4 +15,6 @@ class AgencyPageObject:
     def scrape_table_data(self):
         UtilityMethods.wait_until_element_appear(browser=self.browser, locator=self.table_row_locator, timeout=20)
         table_rows_elements = self.browser.get_webelements(self.table_row_locator)
-        print(len(table_rows_elements))
+
+        for row in table_rows_elements:
+

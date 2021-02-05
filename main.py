@@ -5,8 +5,8 @@ import time
 
 
 
-#url = "https://itdashboard.gov/drupal/summary/010"
-url = "https://itdashboard.gov/"
+url = "https://itdashboard.gov/drupal/summary/010"
+#url = "https://itdashboard.gov/"
 agency_name = 'Department of the Interior'
 
 
@@ -16,11 +16,11 @@ def main():
     try:
         web_process.open_the_website()
 
-        agencies_data = web_process.scrape_and_get_agencies_data()
-        print(str(agencies_data.count()) + " items scraped from url " + url)
-        selected_agency = UtilityMethods.get_agency_by_name(agency_name, agencies_data)
+        # agencies_data = web_process.scrape_and_get_agencies_data()
+        # print(str(agencies_data.count()) + " items scraped from url " + url)
+        # selected_agency = UtilityMethods.get_agency_by_name(agency_name, agencies_data)
 
-        #selected_agency = AgencyModel(agency_name, "$1.4B", "https://itdashboard.gov/drupal/summary/010")
+        selected_agency = AgencyModel(agency_name, "$1.4B", "https://itdashboard.gov/drupal/summary/010")
         print("'"+selected_agency.name + "' item was selected")
         web_process.open_item_link(selected_agency.link)
         print(selected_agency.name + " page has been opened by url: " + selected_agency.link)
