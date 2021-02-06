@@ -1,9 +1,8 @@
-from py_linq import Enumerable
+from src.webprocess.pageobjects.page_object import PageObject
 from src.models.agencymodel import AgencyModel
-from src.utility.utilitymethods import UtilityMethods
 
 
-class MainPageObject:
+class MainPageObject(PageObject):
 
     dive_in_locator: str = "//a[@aria-controls='home-dive-in']"
     agency_item_locator: str = "//div[@id='agency-tiles-widget']//div//div//div//div//div//div//div" \
@@ -11,7 +10,7 @@ class MainPageObject:
     agencies_elements = []
 
     def __init__(self, browser):
-        self.browser = browser
+        PageObject.__init__(self, browser)
 
     def get_agencies_data(self):
         self.get_agencies_elements()
@@ -28,7 +27,7 @@ class MainPageObject:
         return collection
 
     def get_agencies_elements(self):
-        UtilityMethods.wait_until_element_appear(browser=self.browser, locator=self.agency_item_locator)
+        self.wait_until_element_appear(locator=self.agency_item_locator)
         self.agencies_elements = self.browser.get_webelements(self.agency_item_locator)
 
     def click_to_dive_in(self):
