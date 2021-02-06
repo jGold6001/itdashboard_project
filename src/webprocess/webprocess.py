@@ -26,6 +26,7 @@ class WebProcess:
         self.uii_page_object = UIIPageObject(self.browser, self.path_to_temp)
 
     def check_and_create_directories(self):
+        UtilityMethods.check_and_create_directory(self.path_to_output_dir)
         UtilityMethods.check_and_create_directory(self.path_to_pdfs)
         UtilityMethods.check_and_create_directory(self.path_to_excel)
         UtilityMethods.check_and_create_directory(self.path_to_temp)
@@ -54,7 +55,7 @@ class WebProcess:
             print("Page #{}".format(self.agency_page_object.current_page_number))
             individual_investments_page_data = self.agency_page_object.get_data_from_tr_elements()
             print("Data were scraped")
-            self.uii_process(individual_investments_page_data)
+            #self.uii_process(individual_investments_page_data)
             print("Page was processed")
             is_next_btn_active = self.agency_page_object.check_is_next_btn_active()
             if is_next_btn_active:

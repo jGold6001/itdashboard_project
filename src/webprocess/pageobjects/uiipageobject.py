@@ -1,7 +1,7 @@
 import time
 from RPA.Browser.Selenium import Browser
 from src.utility.utilitymethods import UtilityMethods
-from src.webprocess.pageobjects.page_object import PageObject
+from src.webprocess.pageobjects.pageobject import PageObject
 
 
 class UIIPageObject(PageObject):

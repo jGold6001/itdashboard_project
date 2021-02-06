@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from src.models.indvinvstmodel import IndividualInvestmentsModel
 from RPA.Browser.Selenium import Browser
-from src.webprocess.pageobjects.page_object import PageObject
+from src.webprocess.pageobjects.pageobject import PageObject
 
 
 class AgencyPageObject(PageObject):
@@ -23,25 +23,14 @@ class AgencyPageObject(PageObject):
         table_tr_elements = self.browser.get_webelements(self.table_tr_locator)
         page_data_list = list()
         for tr_element in table_tr_elements:
-            row_data = self.get_data_from_td_elements(tr_element.find_elements(By.TAG_NAME, "td"))
-            data = IndividualInvestmentsModel(row_data[0], row_data[1], row_data[2], row_data[3],
-                                              row_data[4], row_data[5], row_data[6])
-            page_data_list.append(data)
+            page_data_list.append(self.get_data_from_td_elements(tr_element.find_elements(By.TAG_NAME, "td")))
 
         return page_data_list
 
     def get_data_from_td_elements(self, tr_elements):
-        row_data = list()
-        for tr_elem in tr_elements:
-            if tr_elem == tr_elements[0]:
-                a_elements = tr_elem.find_elements(By.TAG_NAME, "a")
-                if len(a_elements) > 0:
-                    row_data.append(a_elements[0].get_attribute('href'))
-                else:
-                    row_data.append(tr_elem.text)
-            else:
-                row_data.append(tr_elem.text)
-        return row_data
+        return IndividualInvestmentsModel(tr_elements[0].text, tr_elements[1].text, tr_elements[2].text, tr_elements[3].text,
+                                          tr_elements[4].text, tr_elements[5].text, tr_elements[6].text, self.get_link_url(tr_elements[0]))
+
 
     def check_is_next_btn_active(self):
         self.btn_next_element = self.browser.find_element(self.btn_next_locator)
@@ -59,3 +48,10 @@ class AgencyPageObject(PageObject):
 
     def get_current_page_number(self):
         self.current_page_number = self.browser.find_element(self.btn_current_page_locator).text
+
+    def get_link_url(self, element):
+        a_elements = element.find_elements(By.TAG_NAME, "a")
+        if len(a_elements) > 0:
+            return a_elements[0].get_attribute('href')
+        else:
+            return ""
