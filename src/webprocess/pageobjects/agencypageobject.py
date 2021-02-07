@@ -13,8 +13,8 @@ class AgencyPageObject(PageObject):
     current_page_number = 0
     btn_next_element = None
 
-    def __init__(self, browser: Browser):
-        PageObject.__init__(self, browser)
+    def __init__(self, browser: Browser, url: str):
+        PageObject.__init__(self, browser, url)
 
     def wait_until_table_load(self):
         self.wait_until_element_appear(locator=self.table_tr_locator, timeout=20)
@@ -30,7 +30,6 @@ class AgencyPageObject(PageObject):
     def get_data_from_td_elements(self, tr_elements):
         return IndividualInvestmentsModel(tr_elements[0].text, tr_elements[1].text, tr_elements[2].text, tr_elements[3].text,
                                           tr_elements[4].text, tr_elements[5].text, tr_elements[6].text, self.get_link_url(tr_elements[0]))
-
 
     def check_is_next_btn_active(self):
         self.btn_next_element = self.browser.find_element(self.btn_next_locator)
