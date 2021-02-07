@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from src.models.indvinvstmodel import IndividualInvestmentsModel
 from RPA.Browser.Selenium import Browser
-from src.webprocess.pageobjects.pageobject import PageObject
+from src.process.pageobjects.pageobject import PageObject
 
 
 class AgencyPageObject(PageObject):

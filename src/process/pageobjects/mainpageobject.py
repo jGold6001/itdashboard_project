@@ -1,4 +1,4 @@
-from src.webprocess.pageobjects.pageobject import PageObject
+from src.process.pageobjects.pageobject import PageObject
 from src.models.agencymodel import AgencyModel
 
 
@@ -33,8 +33,7 @@ class MainPageObject(PageObject):
     def click_to_dive_in(self):
         self.browser.click_element(self.dive_in_locator)
 
-    @staticmethod
-    def split_agency_text_to_array(text: str):
+    def split_agency_text_to_array(self, text: str):
         data_array = list()
         str_array = text.split("\n")
         agency_name: str = str_array[0].strip()

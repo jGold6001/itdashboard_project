@@ -4,7 +4,7 @@ from RPA.FileSystem import FileSystem
 from py_linq import Enumerable
 from src.utility.utilitymetods import UtilityMethods
 
-from src.webprocess.pageobjects.pageobject import PageObject
+from src.process.pageobjects.pageobject import PageObject
 
 
 class UIIPageObject(PageObject):
@@ -15,8 +15,8 @@ class UIIPageObject(PageObject):
     def __init__(self, browser: Browser, link: str, uii: str,  path_to_pdfs_dir: str):
         PageObject.__init__(self, browser, link)
         self.path_to_downloads_dir = self.browser.download_preferences["download.default_directory"]
-        print("Download directory path -'" + self.path_to_downloads_dir + "'")
         self.path_to_pdfs_dir = path_to_pdfs_dir
+        self.path_to_pdf_file = ""
         self.uii = uii
 
     def download_file(self):
@@ -60,3 +60,4 @@ class UIIPageObject(PageObject):
     def move_pdf_from_temp_to_pdfs_dir(self):
         new_file_path = self.fs.join_path(self.path_to_pdfs_dir, self.uii + UtilityMethods.time_stamp() + ".pdf")
         self.fs.move_file(self.path_to_downloaded_file, new_file_path)
+        self.path_to_pdf_file = new_file_path
