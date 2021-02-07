@@ -22,7 +22,7 @@ def main():
         web_process.download_pdf_files()
 
     except Exception as ex:
-        print("Unexpected error - " + str(ex))
+        raise Exception("Unexpected error - " + str(ex))
     finally:
         web_process.close_the_website()
 

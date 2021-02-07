@@ -8,7 +8,7 @@ from src.process.pageobjects.pageobject import PageObject
 
 
 class UIIPageObject(PageObject):
-    download_pdf_locator = "//*[@id='business-case-pdf']/a"
+    download_pdf_locator = "link:Download Business Case PDF"
     path_to_downloaded_file = ""
     fs = FileSystem()
 
