@@ -1,6 +1,4 @@
 from py_linq import Enumerable
-
-from src.models.indvinvstmodel import IndividualInvestmentsModel
 from src.utility.pdfutility import PdfUtility
 from src.utility.utilitymetods import UtilityMethods
 from src.process.pageobjects.mainpageobject import MainPageObject
