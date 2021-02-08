@@ -15,6 +15,7 @@ class Common:
             fs.join_path(config.PATH_TO_OUTPUT_DIR, config.PDFS_DIR_NAME),
             fs.join_path(config.PATH_TO_OUTPUT_DIR, config.EXCEL_DIR_NAME)
         ]
+        UtilityMethods.check_and_remove_directories(directories[0])
         UtilityMethods.check_and_create_directories(directories)
 
         return {
@@ -34,3 +35,7 @@ class Common:
         destination_path = fs.join_path(path_to_destination_directory,file_name)
         fs.copy_file(destination=destination_path, source=source_path)
         return destination_path
+
+    @staticmethod
+    def kill_excel():
+        UtilityMethods.kill_processes(["EXCEL.EXE"])

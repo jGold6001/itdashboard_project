@@ -10,6 +10,7 @@ def main():
         # variables
         website_url = config.URL
         agency_name = config.AGENCY_NAME
+        Common.kill_excel()
         directories = Common.check_and_create_directories()
         path_to_excel_output_file = Common.prepare_and_get_output_excel_path(directories["excel"])
 

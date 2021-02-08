@@ -20,12 +20,16 @@ class AgencyPageObject(PageObject):
         self.wait_until_element_appear(locator=self.table_tr_locator, timeout=20)
 
     def get_data_from_tr_elements(self):
-        table_tr_elements = self.browser.get_webelements(self.table_tr_locator)
-        page_data_list = list()
-        for tr_element in table_tr_elements:
-            page_data_list.append(self.get_data_from_td_elements(tr_element.find_elements(By.TAG_NAME, "td")))
+        try:
+            table_tr_elements = self.browser.get_webelements(self.table_tr_locator)
+            page_data_list = list()
+            for tr_element in table_tr_elements:
+                page_data_list.append(self.get_data_from_td_elements(tr_element.find_elements(By.TAG_NAME, "td")))
 
-        return page_data_list
+            return page_data_list
+        except Exception as ex:
+            raise Exception("Failure data scraping.Reason: "+str(ex))
+
 
     def get_data_from_td_elements(self, tr_elements):
         return IndividualInvestmentsModel(tr_elements[0].text, tr_elements[1].text, tr_elements[2].text, tr_elements[3].text,

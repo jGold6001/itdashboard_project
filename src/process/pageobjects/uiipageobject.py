@@ -2,8 +2,6 @@ import time
 from RPA.Browser.Selenium import Browser
 from RPA.FileSystem import FileSystem
 from py_linq import Enumerable
-from selenium.common.exceptions import ElementClickInterceptedException
-
 from src.utility.utilitymetods import UtilityMethods
 
 from src.process.pageobjects.pageobject import PageObject
@@ -14,7 +12,7 @@ class UIIPageObject(PageObject):
     path_to_downloaded_file = ""
     fs = FileSystem()
 
-    def __init__(self, browser: Browser, link: str, uii: str,  path_to_pdfs_dir: str):
+    def __init__(self, browser: Browser, link: str, uii: str, path_to_pdfs_dir: str):
         PageObject.__init__(self, browser, link)
         self.path_to_downloads_dir = self.browser.download_preferences["download.default_directory"]
         self.path_to_pdfs_dir = path_to_pdfs_dir
@@ -22,15 +20,21 @@ class UIIPageObject(PageObject):
         self.uii = uii
 
     def download_file(self):
-        self.go_to_page()
-        self.click_on_file()
-        self.check_is_file_download()
-        self.move_pdf_from_temp_to_pdfs_dir()
+        try:
+            self.go_to_page()
+            self.click_on_file_link()
+            self.check_is_file_download()
+            self.move_pdf_from_temp_to_pdfs_dir()
+        except Exception as ex:
+            raise Exception("Failure download file. Reason:" + str(ex))
 
-    def click_on_file(self):
-        self.wait_until_element_appear(locator=self.download_pdf_locator)
-        self.remove_block_element()
-        self.browser.click_element(self.download_pdf_locator)
+    def click_on_file_link(self):
+        try:
+            self.wait_until_element_appear(locator=self.download_pdf_locator)
+            self.remove_block_element()
+            self.browser.click_element(self.download_pdf_locator)
+        except Exception as ex:
+            raise Exception("Unable click on the file link." + str(ex))
 
     def check_is_file_download(self):
         attempts: int = 10
@@ -61,9 +65,14 @@ class UIIPageObject(PageObject):
             raise ex
 
     def move_pdf_from_temp_to_pdfs_dir(self):
-        new_file_path = self.fs.join_path(self.path_to_pdfs_dir, self.uii + UtilityMethods.time_stamp() + ".pdf")
-        self.fs.move_file(self.path_to_downloaded_file, new_file_path)
-        self.path_to_pdf_file = new_file_path
+        try:
+            new_file_path = self.fs.join_path(self.path_to_pdfs_dir, self.uii + UtilityMethods.time_stamp() + ".pdf")
+            time.sleep(3)
+            self.fs.move_file(self.path_to_downloaded_file, new_file_path)
+            time.sleep(3)
+            self.path_to_pdf_file = new_file_path
+        except Exception as ex:
+            raise Exception("Unable to move the downloaded file. "+str(ex))
 
     def remove_block_element(self):
         block_element = self.browser.find_element("//*[@id='top-link-block']/a")

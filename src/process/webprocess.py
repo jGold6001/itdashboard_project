@@ -48,10 +48,17 @@ class WebProcess:
         start_row_of_excel_file = 2
         while is_next_btn_active:
             agency_page_object.get_current_page_number()
-            individual_investments_page_data = agency_page_object.get_data_from_tr_elements()
-            print("Page #{} was scraped".format(agency_page_object.current_page_number))
-            start_row_of_excel_file = self.write_indv_invst_page_data_to_excel_file(individual_investments_page_data,
-                                                                                    start_row_of_excel_file)
+            individual_investments_page_data = list()
+            print("Page #{}".format(agency_page_object.current_page_number))
+            try:
+                individual_investments_page_data = agency_page_object.get_data_from_tr_elements()
+                print("Scraped")
+                start_row_of_excel_file = self.write_indv_invst_page_data_to_excel_file(
+                    individual_investments_page_data,
+                    start_row_of_excel_file)
+            except Exception as ex:
+                print(str(ex))
+
             self.individual_investments_of_agency += individual_investments_page_data
             is_next_btn_active = agency_page_object.check_is_next_btn_active()
             if is_next_btn_active:
@@ -64,11 +71,15 @@ class WebProcess:
         print("The pdf downloading process was started")
         for ind_inv_item in self.individual_investments_of_agency:
             if ind_inv_item.uii_link != '':
-                uii_page_object = UIIPageObject(browser=self.browser, link=ind_inv_item.uii_link,
-                                                path_to_pdfs_dir=self.directories['pdfs'], uii=ind_inv_item.uii)
-                uii_page_object.download_file()
-                print("Pdf from '"+ind_inv_item.uii_link+"' was downloaded")
-                self.extract_section_from_pdf(uii_page_object.path_to_pdf_file, [ind_inv_item.investment_title, ind_inv_item.uii])
+                try:
+                    uii_page_object = UIIPageObject(browser=self.browser, link=ind_inv_item.uii_link,
+                                                    path_to_pdfs_dir=self.directories['pdfs'], uii=ind_inv_item.uii)
+                    uii_page_object.download_file()
+                    print("Pdf from '" + ind_inv_item.uii_link + "' was downloaded")
+                    self.extract_section_from_pdf(uii_page_object.path_to_pdf_file,
+                                                  [ind_inv_item.investment_title, ind_inv_item.uii])
+                except Exception as ex:
+                    print(str(ex))
 
         print("The pdf downloading process was started")
 
@@ -95,10 +106,13 @@ class WebProcess:
             self.excel.save_and_close_file()
 
     def extract_section_from_pdf(self, pdf_file_path: str, values_to_compare: []):
-        first_page_text: str = PdfUtility.extract_data(pdf_file_path).get(1)
-        section_a_content: str = first_page_text.partition("(All Capital Assets)")[2].partition("Section B")[0].lower()
-        print("'Section A' was extracted from pdf ")
-        is_investment_title_exist: bool = (section_a_content.find(values_to_compare[0].lower()) != -1)
-        is_uii_exist = (section_a_content.find(values_to_compare[1].lower()) != -1)
-        print("'Investment Title' == 'Name of this Investment' result => " + str(is_investment_title_exist))
-        print("'UII' == 'Unique Investment Identifier (UII)' result => " + str(is_uii_exist))
+        try:
+            first_page_text: str = PdfUtility.extract_data(pdf_file_path).get(1)
+            section_a_content: str = first_page_text.partition("Section A")[2].partition("Section B")[0].lower()
+            print("'Section A' was extracted from pdf ")
+            is_investment_title_exist: bool = (section_a_content.find(values_to_compare[0].lower()) != -1)
+            is_uii_exist = (section_a_content.find(values_to_compare[1].lower()) != -1)
+            print("'Investment Title' == 'Name of this Investment' result => " + str(is_investment_title_exist))
+            print("'UII' == 'Unique Investment Identifier (UII)' result => " + str(is_uii_exist))
+        except Exception as ex:
+            print("Error pdf process. Reason: "+str(ex))

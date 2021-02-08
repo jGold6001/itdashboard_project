@@ -19,9 +19,9 @@ class PageObject:
                 is_success = True
             except Exception as ex:
                 exception = ex
-                print("Error-Retry scope.The element was not appeared." + str(exception))
                 count += 1
 
         if is_success is False:
+            print("Error-Retry scope.The element was not appeared." + str(exception))
             raise exception
 
