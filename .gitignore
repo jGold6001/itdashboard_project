@@ -12,4 +12,3 @@ temp/
 *.pyc
 *.zip
 tests/
-dev_test.py
