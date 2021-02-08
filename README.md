@@ -8,10 +8,6 @@ Solution deploying using **Windows 10** and **Chrome 87.0.4280.88**
 * rpaframework 7.4.2
 
 
-### Installation
-https://cloud.robocorp.com/
-
-
-#### Build And Run
+#### Installation.Build And Run
 https://cloud.robocorp.com/
 
