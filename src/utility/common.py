@@ -43,12 +43,12 @@ class Common:
         web_site = config.URL
         agency_name = config.AGENCY_NAME
         try:
-            web_site = secret.get_secret("WEBSITE_URL")
+            web_site = secret.get_secret("itdashboard_vault")["WEBSITE_URL"]
         except:
             print("The web site url was not available from 'Robocorp Cloud' Secrets'. ")
 
         try:
-            agency_name = secret.get_secret("AGENCY_NAME")
+            agency_name = secret.get_secret("itdashboard_vault")["AGENCY_NAME"]
         except:
             print("The agency name was not available from 'Robocorp Cloud' Secrets'. ")
 
