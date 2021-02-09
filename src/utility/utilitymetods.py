@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 import shutil
 import psutil
+import re
 
 
 class UtilityMethods:
@@ -39,3 +40,12 @@ class UtilityMethods:
             except Exception as ex:
                 print("Unable to kill process. Reason: " + str(ex))
 
+    @staticmethod
+    def get_filepaths_with_oswalk(root_path: str, file_regex: str):
+        files_paths = []
+        pattern = re.compile(file_regex)
+        for root, directories, files in os.walk(root_path):
+            for file in files:
+                if pattern.match(file):
+                    files_paths.append(os.path.join(root, file))
+        return files_paths

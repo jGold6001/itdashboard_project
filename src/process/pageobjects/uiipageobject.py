@@ -56,13 +56,12 @@ class UIIPageObject(PageObject):
             raise exception
 
     def find_path_of_downloaded_file(self):
-        try:
-            files_from_downloads = Enumerable(self.fs.list_files_in_directory(self.path_to_downloads_dir))
-            self.path_to_downloaded_file = files_from_downloads.where(lambda x:
-                                                                      (x.name.lower().find(self.uii.lower()) != -1)
-                                                                      and (x.name.lower().find(".pdf") != -1))[0].path
-        except Exception as ex:
-            raise ex
+        files_from_downloads = Enumerable(UtilityMethods.get_filepaths_with_oswalk(self.path_to_downloads_dir,
+                                                                                   "(.*pdf$)"))
+        self.path_to_downloaded_file = files_from_downloads.where(lambda x: x.lower().find(self.uii.lower()) != -1)[0]
+
+        if self.path_to_downloaded_file is None:
+            raise Exception("The '.pdf' file wasn't found or the extension is invalid")
 
     def move_pdf_from_temp_to_pdfs_dir(self):
         try:

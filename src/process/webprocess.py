@@ -81,7 +81,7 @@ class WebProcess:
                 except Exception as ex:
                     print(str(ex))
 
-        print("The pdf downloading process was started")
+        print("The pdf downloading process was finished")
 
     def write_agencies_to_excel_file(self, agencies: []):
         try:
