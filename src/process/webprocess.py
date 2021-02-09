@@ -37,7 +37,7 @@ class WebProcess:
 
     def select_agency(self, name: str):
         self.selected_agency = self.agencies.where(lambda x: x.name == name)[0]
-        print(self.selected_agency.name + " page has been selected and opened by url: " + self.selected_agency.link)
+        print("'"+self.selected_agency.name + "' page has been selected and opened by url: " + self.selected_agency.link)
 
     def scrape_data_table_of_agency(self):
         agency_page_object = AgencyPageObject(self.browser, self.selected_agency.link)
@@ -73,7 +73,7 @@ class WebProcess:
             if ind_inv_item.uii_link != '':
                 try:
                     uii_page_object = UIIPageObject(browser=self.browser, link=ind_inv_item.uii_link,
-                                                    path_to_pdfs_dir=self.directories['pdfs'], uii=ind_inv_item.uii)
+                                                    path_to_pdfs_dir=self.directories['output'], uii=ind_inv_item.uii)
                     uii_page_object.download_file()
                     print("Pdf from '" + ind_inv_item.uii_link + "' was downloaded")
                     self.extract_section_from_pdf(uii_page_object.path_to_pdf_file,

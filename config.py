@@ -2,7 +2,7 @@
 
 # Main Settings
 URL = "https://itdashboard.gov/"
-AGENCY_NAME = 'Department of the Interior'
+AGENCY_NAME = 'National Science Foundation'
 
 # Excel
 PATH_TO_EXCEL_OUTPUT_TEMPLATE_FILE = "templates/output_data.xlsx"
@@ -11,6 +11,4 @@ INDIVIDUAL_INVESTMENTS_SHEET = "Individual Investments"
 
 # Directories
 PATH_TO_OUTPUT_DIR = "output"
-PDFS_DIR_NAME = "pdfs"
-EXCEL_DIR_NAME = "excel"
 TEMP_DIR_NAME = "temp"
