@@ -22,6 +22,8 @@ Please leverage pure python using the **[rpaframework](https://rpaframework.org/
 Extract data from PDF. You need to get the data from **Section A** in each PDF. Then compare the value "**Name of this Investment**" with the column "**Investment Title**", and the value "**Unique Investment Identifier (UII)**" with the column "**UII**"
 
 
+
+###################################################################################################
 Solution deploying using **Windows 10** and **Chrome 87.0.4280.88** 
 
 
