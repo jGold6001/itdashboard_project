@@ -13,6 +13,5 @@ dependencies:
   - pip:
     # Define pip packages here. 
     # https://pypi.org/
-    - rpaframework==7.1.1 # https://rpaframework.org/releasenotes.html
-    - py-linq==1.2.5
-    - psutil==5.8.0
+    - rpaframework
+
