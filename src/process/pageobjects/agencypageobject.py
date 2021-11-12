@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from src.models.indvinvstmodel import IndividualInvestmentsModel
-from RPA.Browser.Selenium import Browser
+from RPA.Browser.Selenium import Selenium
 from src.process.pageobjects.pageobject import PageObject
 
 
@@ -13,11 +13,11 @@ class AgencyPageObject(PageObject):
     current_page_number = 0
     btn_next_element = None
 
-    def __init__(self, browser: Browser, url: str):
+    def __init__(self, browser: Selenium, url: str):
         PageObject.__init__(self, browser, url)
 
     def wait_until_table_load(self):
-        self.wait_until_element_appear(locator=self.table_tr_locator, timeout=20)
+        self.wait_until_element_appear(locator=self.table_tr_locator)
 
     def get_data_from_tr_elements(self):
         try:
@@ -47,7 +47,7 @@ class AgencyPageObject(PageObject):
         self.btn_next_element.click()
         btn_current_page_of_next_number_locator = self.btn_current_page_of_next_number_locator_pattern.format(
             next_page_number)
-        self.wait_until_element_appear(locator=btn_current_page_of_next_number_locator, timeout=15)
+        self.wait_until_element_appear(locator=btn_current_page_of_next_number_locator)
 
     def get_current_page_number(self):
         self.current_page_number = self.browser.find_element(self.btn_current_page_locator).text

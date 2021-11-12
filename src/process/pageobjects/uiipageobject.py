@@ -1,7 +1,6 @@
 import time
-from RPA.Browser.Selenium import Browser
+from RPA.Browser.Selenium import Selenium
 from RPA.FileSystem import FileSystem
-from py_linq import Enumerable
 from src.utility.utilitymetods import UtilityMethods
 
 from src.process.pageobjects.pageobject import PageObject
@@ -12,7 +11,7 @@ class UIIPageObject(PageObject):
     path_to_downloaded_file = ""
     fs = FileSystem()
 
-    def __init__(self, browser: Browser, link: str, uii: str, path_to_pdfs_dir: str):
+    def __init__(self, browser: Selenium, link: str, uii: str, path_to_pdfs_dir: str):
         PageObject.__init__(self, browser, link)
         self.path_to_downloads_dir = self.browser.download_preferences["download.default_directory"]
         self.path_to_pdfs_dir = path_to_pdfs_dir
@@ -56,9 +55,9 @@ class UIIPageObject(PageObject):
             raise exception
 
     def find_path_of_downloaded_file(self):
-        files_from_downloads = Enumerable(UtilityMethods.get_filepaths_with_oswalk(self.path_to_downloads_dir,
+        files_from_downloads = list(UtilityMethods.get_filepaths_with_oswalk(self.path_to_downloads_dir,
                                                                                    "(.*pdf$)"))
-        self.path_to_downloaded_file = files_from_downloads.where(lambda x: x.lower().find(self.uii.lower()) != -1)[0]
+        self.path_to_downloaded_file = next(filter(lambda x: x.lower().find(self.uii.lower()) != -1, files_from_downloads))
 
         if self.path_to_downloaded_file is None:
             raise Exception("The '.pdf' file wasn't found or the extension is invalid")

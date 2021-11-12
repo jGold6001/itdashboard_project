@@ -8,10 +8,9 @@ def main():
     web_process = None
     try:
         # variables
-        secrets_data = Common.get_secret_values()
-        website_url = secrets_data.website_url
-        agency_name = secrets_data.agency_name
-        Common.kill_excel()
+        vaults_data = Common.get_vaults()
+        website_url = vaults_data.website_url
+        agency_name = vaults_data.agency_name
         directories = Common.check_and_create_directories()
         print("Path to output directory: " + directories["output"])
         path_to_excel_output_file = Common.prepare_and_get_output_excel_path(directories["output"])

@@ -1,4 +1,4 @@
-from RPA.Robocloud.Secrets import Secrets
+from RPA.Robocorp.Vault import Vault
 from src.models.secretsmodel import SecretsModel
 from src.utility.utilitymetods import UtilityMethods
 from RPA.FileSystem import FileSystem
@@ -37,18 +37,20 @@ class Common:
         UtilityMethods.kill_processes(["EXCEL.EXE"])
 
     @staticmethod
-    def get_secret_values():
-        secret = Secrets()
+    def get_vaults():
+        vault = Vault()
         web_site = config.URL
         agency_name = config.AGENCY_NAME
         try:
-            web_site = secret.get_secret("itdashboard_vault")["WEBSITE_URL"]
+            web_site = vault.get_secret("itdashboard_vault")["WEBSITE_URL"]
         except:
+            web_site = config.URL
             print("The web site url was not available from 'Robocorp Cloud' Secrets'. ")
 
         try:
-            agency_name = secret.get_secret("itdashboard_vault")["AGENCY_NAME"]
+            agency_name = vault.get_secret("itdashboard_vault")["AGENCY_NAME"]
         except:
+            agency_name = config.AGENCY_NAME
             print("The agency name was not available from 'Robocorp Cloud' Secrets'. ")
 
         return SecretsModel(web_site, agency_name)

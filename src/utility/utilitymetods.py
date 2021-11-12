@@ -1,5 +1,4 @@
 import time
-from py_linq import Enumerable
 import os
 from datetime import datetime
 import shutil
@@ -8,10 +7,6 @@ import re
 
 
 class UtilityMethods:
-    @staticmethod
-    def convert_to_enumerable(input_collection):
-        enumerable_collection = Enumerable(input_collection)
-        return enumerable_collection
 
     @staticmethod
     def time_stamp():

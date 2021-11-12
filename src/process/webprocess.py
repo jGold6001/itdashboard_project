@@ -1,9 +1,7 @@
-from py_linq import Enumerable
 from src.utility.pdfutility import PdfUtility
-from src.utility.utilitymetods import UtilityMethods
 from src.process.pageobjects.mainpageobject import MainPageObject
 from src.process.pageobjects.agencypageobject import AgencyPageObject
-from RPA.Browser.Selenium import Browser
+from RPA.Browser.Selenium import Selenium
 from src.process.pageobjects.uiipageobject import UIIPageObject
 from src.utility.excelutility import ExcelUtility
 import config
@@ -14,10 +12,10 @@ class WebProcess:
     def __init__(self, url: str, directories, path_to_excel_output_file):
         self.url = url
         self.directories = directories
-        self.agencies = Enumerable()
+        self.agencies = list()
         self.selected_agency = None
         self.individual_investments_of_agency = list()
-        self.browser = Browser()
+        self.browser = Selenium()
         self.excel = ExcelUtility(path_to_excel_output_file)
 
     def set_and_open_the_website(self):
@@ -31,12 +29,12 @@ class WebProcess:
     def scrape_and_get_agencies_data(self):
         main_page_object = MainPageObject(self.browser)
         main_page_object.click_to_dive_in()
-        self.agencies = UtilityMethods.convert_to_enumerable(main_page_object.get_agencies_data())
-        print(str(self.agencies.count()) + " items scraped from url " + self.url)
+        self.agencies = main_page_object.get_agencies_data()
+        print(str(len(self.agencies)) + " items scraped from url " + self.url)
         self.write_agencies_to_excel_file(self.agencies)
 
     def select_agency(self, name: str):
-        self.selected_agency = self.agencies.where(lambda x: x.name == name)[0]
+        self.selected_agency = next(filter(lambda x:x.name == name, self.agencies))
         print("'"+self.selected_agency.name + "' page has been selected and opened by url: " + self.selected_agency.link)
 
     def scrape_data_table_of_agency(self):
