@@ -14,5 +14,4 @@ dependencies:
     # Define pip packages here. 
     # https://pypi.org/
     - rpaframework==11.6.1
-    - psutil==5.8.0
 
