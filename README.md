@@ -28,8 +28,8 @@ Solution deploying using **Windows 10** and **Chrome 87.0.4280.88**
 
 
 ### Tech 
-* python 3.9
-* rpaframework 7.4.2
+* python
+* rpaframework 
 
 
 #### Installation.Build And Run
