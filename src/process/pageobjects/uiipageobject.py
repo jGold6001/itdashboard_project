@@ -23,7 +23,7 @@ class UIIPageObject(PageObject):
             self.go_to_page()
             self.click_on_file_link()
             self.check_is_file_download()
-            self.move_pdf_from_temp_to_pdfs_dir()
+            self.path_to_pdf_file = self.path_to_downloaded_file
         except Exception as ex:
             raise Exception("Failure download file. Reason:" + str(ex))
 
@@ -62,15 +62,6 @@ class UIIPageObject(PageObject):
         if self.path_to_downloaded_file is None:
             raise Exception("The '.pdf' file wasn't found or the extension is invalid")
 
-    def move_pdf_from_temp_to_pdfs_dir(self):
-        try:
-            new_file_path = self.fs.join_path(self.path_to_pdfs_dir, self.uii + UtilityMethods.time_stamp() + ".pdf")
-            time.sleep(3)
-            self.fs.move_file(self.path_to_downloaded_file, new_file_path)
-            time.sleep(3)
-            self.path_to_pdf_file = new_file_path
-        except Exception as ex:
-            raise Exception("Unable to move the downloaded file. "+str(ex))
 
     def remove_block_element(self):
         block_element = self.browser.find_element("//*[@id='top-link-block']/a")

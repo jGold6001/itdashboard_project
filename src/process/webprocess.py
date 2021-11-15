@@ -19,7 +19,7 @@ class WebProcess:
         self.excel = ExcelUtility(path_to_excel_output_file)
 
     def set_and_open_the_website(self):
-        self.browser.set_download_directory(directory=self.directories['temp'])
+        self.browser.set_download_directory(directory=self.directories['output'])
         self.browser.open_available_browser(self.url)
         self.browser.maximize_browser_window()
 

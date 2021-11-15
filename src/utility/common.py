@@ -13,13 +13,12 @@ class Common:
         fs = FileSystem()
         directories = [
             config.PATH_TO_OUTPUT_DIR,
-            fs.join_path(config.PATH_TO_OUTPUT_DIR, config.TEMP_DIR_NAME),
+            fs.join_path(config.PATH_TO_OUTPUT_DIR),
         ]
         UtilityMethods.check_and_remove_directories(directories[0])
         UtilityMethods.check_and_create_directories(directories)
         return {
-            "output": fs.absolute_path(directories[0]),
-            "temp": fs.absolute_path(directories[1]),
+            "output": fs.absolute_path(directories[0])
         }
 
     @staticmethod

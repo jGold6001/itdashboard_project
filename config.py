@@ -11,4 +11,3 @@ INDIVIDUAL_INVESTMENTS_SHEET = "Individual Investments"
 
 # Directories
 PATH_TO_OUTPUT_DIR = "output"
-TEMP_DIR_NAME = "temp"

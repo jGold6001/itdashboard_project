@@ -1,10 +1,14 @@
+import datetime
+
 from src.utility.common import Common
 from src.process.webprocess import WebProcess
 
 
 def main():
-    print("===start process===")
 
+    print("===start process===")
+    start_date: datetime = datetime.datetime.now()
+    print(start_date)
     web_process = None
     try:
         # variables
@@ -30,7 +34,10 @@ def main():
             web_process.close_the_website()
 
     print("===finish process===")
-
+    finish_date: datetime = datetime.datetime.now()
+    print(finish_date)
+    seconds = (finish_date-start_date).total_seconds()
+    print('seconds: '+ str(seconds))
 
 if __name__ == "__main__":
     main()
